@@ -31,7 +31,10 @@ def update(val):
     B = slider_B.val
     C = slider_C.val
     D = slider_D.val    
-    g.tasand(A, B, C, D)
+    #g.tasand(1, 0, 0, 0)
+    #g.tasand(0, 1, 0, 0)
+    g.tasand(np.array([0,0,0]), np.array([A, B, C]), np.array([A+1, B, C]))
+    g.tasand(np.array([0,0,0]), np.array([-A, B, C]), np.array([A+1, B, C]))
     g.vektor(A, B, C)
     ax.set_xlim([-10, 10])
     ax.set_ylim([-10, 10])

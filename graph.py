@@ -1,4 +1,6 @@
 import numpy as np
+import math
+from vmath import Vmath as v
 
 class Graaf:
     def __init__(self, ax):
@@ -22,13 +24,20 @@ class Graaf:
             Z = (-A * self.X - B * self.Y - D) / C
             self.plane = self.ax.plot_surface(self.X, self.Y, Z, alpha=0.7)
         else:
-            if A != 0:
-                X = (-B * self.X - D) / A  # Solve for x if A != 0
-                self.plane = self.ax.plot_surface(X, self.Y, self.X, alpha=0.7)
-            elif B != 0:
-                Y = (-A * self.Y - D) / B  # Solve for y if B != 0
-                self.plane = self.ax.plot_surface(self.X, Y, self.Y, alpha=0.7)
-    
-    def tasand(self, A, B, C, D):
-        Y = (-A * self.X - C * self.Z - D) / B
-        self.plane = self.ax.plot_surface(self.X, Y, self.Z, alpha=0.7)
+            if A == 0 and B == 0:
+                return
+            elif A == 0:
+                Y = (-A * self.X - C * self.Z - D) / B
+                self.plane = self.ax.plot_surface(self.X, Y, self.Z, alpha=0.7)
+            elif B == 0:
+                X = (-B * self.Y - C * self.Z - D) / A
+                self.plane = self.ax.plot_surface(X, self.Y, self.Y, alpha=0.7)
+                
+    def tasand(self, P0, d1, d2):
+        # Parametric equation of the plane: P(u, v) = P0 + u*d1 + v*d2
+        X = P0[0] + self.X * d1[0] + self.Y * d2[0]
+        Y = P0[1] + self.X * d1[1] + self.Y * d2[1]
+        Z = P0[2] + self.X * d1[2] + self.Y * d2[2]
+        
+        # Plot the plane
+        self.ax.plot_surface(X, Y, Z, alpha=0.7)
